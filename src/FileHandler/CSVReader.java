@@ -1,6 +1,9 @@
 package FileHandler;
 
+
+import java.util.ArrayList;
+
 public interface CSVReader {
-    public String Reader();
-    public String Format();
+    public ArrayList<String[]> Reader();
+    public String[] Format();
 }
