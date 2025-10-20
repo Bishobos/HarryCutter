@@ -2,6 +2,7 @@ package DocTemplate;
 
 /**
  * MyClass has a thorough description here using {@link MyOtherClass} with no # for external links and {@link #myMethod} with # for internal links. <br>
+ * For more see <a href="https://www.baeldung.com/javadoc">Baeldung JavaDoc</a> <br>
  * Has Methods:<br>
  * {@link #myMethod(int, int)} short description here. <br>
  * Describe only callable methods. Non-Callable methods are linked to where they are used. <br>
