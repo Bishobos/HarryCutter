@@ -2,11 +2,11 @@ package Main;
 
 import java.util.ArrayList;
 
-public class Schedule {
+public class AppointmentHandler {
     ArrayList<TimeSlot> currentMonth;
     ArrayList<TimeSlot> nextMonth;
 
-    public Schedule(String DDMMYYYY){
+    public AppointmentHandler(String DDMMYYYY){
         //use ReadAppointments to fill currentMonth and nextMonth
         //case where no file at that date exists should be handled, no timeslots to be added to array may cause errors initially
     }
