@@ -1,8 +1,8 @@
 /**
  * TimeSlot er en... <br>
- * Has methods: <br>
+ * Har metoderne: <br>
  *
- * Has attributes: <br>
+ * Har attributterne: <br>
  *
  */
 
@@ -29,7 +29,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     private boolean paid;
 
     /**
-     * Timeslot constructor for new bookings
+     * Timeslot konstruktør for nye bookings
      * @param day
      * @param month
      * @param timestamp
@@ -44,7 +44,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     /**
-     * Timeslot constructor for reading bookings from file
+     * Timeslot konstruktør for at læse booking fra fil
      * @param day
      * @param month
      * @param timestamp
@@ -59,7 +59,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     }
 
     /**
-     * getTime is a...
+     * getTime er en...
      * @return
      */
     public int getTime(){
