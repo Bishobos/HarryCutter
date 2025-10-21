@@ -1,3 +1,5 @@
+package Main;
+
 public class Menu {
 
     public void mainLoop(){
@@ -6,11 +8,11 @@ public class Menu {
 
     public void bookTimeslot(){
         //this should be several different functions for bookings of different lengths
-        //gets user inputs, validates them, and uses Schedule.makeTimeSlot with those inputs
+        //gets user inputs, validates them, and uses Main.Schedule.makeTimeSlot with those inputs
     }
 
     public void cancelBooking(){
-        //Delete a TimeSlot without payment and closing it out
+        //Delete a Main.TimeSlot without payment and closing it out
     }
 
     public void closeBooking(){

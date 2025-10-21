@@ -1,5 +1,7 @@
+package Main;
+
 /**
- * TimeSlot er en... <br>
+ * Main.TimeSlot er en... <br>
  * Har metoderne: <br>
  *
  * Har attributterne: <br>
