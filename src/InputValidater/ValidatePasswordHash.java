@@ -1,5 +1,9 @@
 package InputValidater;
 
+
+/**
+ * THIS FUNCTION IS DEPRICATED
+ */
 public class ValidatePasswordHash {
     String correctHashedPassword;
     String salt;
