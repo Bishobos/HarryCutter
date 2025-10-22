@@ -11,7 +11,13 @@ public class WriteBudget implements CSVWriter {
     String filename = "src/FileHandler/Files/Appointments/budget.csv";
     TimeSlot toWrite;
 
-    public WriteBudget(TimeSlot toWrite, double amountPaid){this.toWrite = toWrite; this.amountPaid = amountPaid;}
+    public WriteBudget(TimeSlot toWrite, double amountPaid){
+        if(toWrite.getIfPaid()) {
+            throw new IllegalStateException("Booking already paid.");
+        }
+        this.toWrite = toWrite;
+        this.amountPaid = amountPaid;
+    }
 
     @Override
     public void writer(){
