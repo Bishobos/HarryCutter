@@ -39,6 +39,7 @@ public class ReadAppointments implements CSVReader{
         }catch ( IOException e){
             System.out.println("ERROR: IOException");
         }
+
         return formatedData;
     }
 
