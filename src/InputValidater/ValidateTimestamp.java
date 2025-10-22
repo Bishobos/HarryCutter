@@ -54,7 +54,7 @@ public class ValidateTimestamp {
             }
 
 
-            if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+            if (( hour < 8 || hour > 15) || !(minute == 0 || minute == 30)) {
                 System.out.println("Ugyldigt klokkeslæt.");
                 return false;
             }
