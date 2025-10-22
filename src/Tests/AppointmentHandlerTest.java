@@ -2,6 +2,7 @@ package Tests;
 
 import Main.AppointmentHandler;
 
+
 public class AppointmentHandlerTest {
     public static void main(String[] args) {
         AppointmentHandler ah = new AppointmentHandler();

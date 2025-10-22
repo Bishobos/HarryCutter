@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ReadProductSales implements CSVReader{
 
     @Override
-    public ArrayList<String[]> reader(String filename){
+    public ArrayList<String[]> reader(){
         ArrayList<String[]> result = new ArrayList<String[]>();
         return result;
     }

@@ -29,10 +29,12 @@ public class AppointmentHandler {
         this.nextMonth = new ArrayList<>();
 
         //Reader objekt
-        ReadAppointments reader = new ReadAppointments();
+        ReadAppointments currentReader = new ReadAppointments(this.currentMonthFilename);
         //Læser data fra csv appointments filer og gemmer i array
-        ArrayList<String[]> currentMonthData = reader.reader(this.currentMonthFilename);
-        ArrayList<String[]> nextMonthData = reader.reader(this.nextMonthFilename);
+        ArrayList<String[]> currentMonthData = currentReader.reader();
+        ReadAppointments nextReader = new ReadAppointments(this.nextMonthFilename);
+
+        ArrayList<String[]> nextMonthData = nextReader.reader();
 
     }
 

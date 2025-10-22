@@ -9,7 +9,8 @@ import java.util.ArrayList;
 /**
  * ReadAppointments er en klasse der bruges til at læse Appointments filer. Den implementerer {@link CSVReader} interfacet
  * Has Methods:
- * {@link #reader(String)}
+ * {@link #ReadAppointments}
+ * {@link #reader()}
  * {@link #format(String)}
  * Has Attributes:
  * {@link #formatedData}
@@ -19,15 +20,23 @@ public class ReadAppointments implements CSVReader{
      * formatedData er en ArrayList&ltString[]&gt af data læst fra filen
      */
     ArrayList<String[]> formatedData = new ArrayList<>();
+    /**
+     * filename er navnet på filen der skal læses fra
+     */
+    String filename;
 
     /**
+     * constructor der tilføjer navn og extention til filename
+     * @param filename fil navn uden navn og extention
+     */
+    public ReadAppointments(String filename){ this.filename = setFilename(filename);}
+    /**
      * reader er hovedmetoden der bruges til at læse data fra filer
-     * @param filename navnet på filen uden path eller extention {@link #setFilename(String)} tilføjer det
      * @return {@link #formatedData} nu fyldt med læst og formatered data
      */
     @Override
-    public ArrayList<String[]> reader(String filename){
-        String formatedFilename = setFilename(filename);
+    public ArrayList<String[]> reader(){
+        String formatedFilename = setFilename(this.filename);
         System.out.println(formatedFilename);
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(formatedFilename))){
             String line;
@@ -35,7 +44,7 @@ public class ReadAppointments implements CSVReader{
                 formatedData.add(format(line));
             }
         }catch ( FileNotFoundException e){
-            System.out.println("No appointments at: " + filename);
+            System.out.println("No appointments at: " + this.filename);
         }catch ( IOException e){
             System.out.println("ERROR: IOException");
         }
