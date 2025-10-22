@@ -20,6 +20,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
     /**
      * timestamp er en...
      */
+    private final int year;
     private final int timestamp;
     /**
      * name er en...
@@ -37,9 +38,10 @@ public class TimeSlot implements Comparable<TimeSlot> {
      * @param timestamp
      * @param name
      */
-    public TimeSlot(int day, int month, int timestamp, String name){
+    public TimeSlot(int day, int month, int year, int timestamp, String name){
         this.day = day;
         this.month = month;
+        this.year = year;
         this.timestamp = timestamp;
         this.name = name;
         this.paid = false;
@@ -52,9 +54,10 @@ public class TimeSlot implements Comparable<TimeSlot> {
      * @param timestamp
      * @param name
      */
-    public TimeSlot(int day, int month, int timestamp, String name, boolean isPaid){
+    public TimeSlot(int day, int month, int year, int timestamp, String name, boolean isPaid){
         this.day = day;
         this.month = month;
+        this.year = year;
         this.timestamp = timestamp;
         this.name = name;
         this.paid = isPaid;
@@ -106,7 +109,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
      */
     @Override
     public String toString(){
-        return this.day + "" + this.month + " " + this.timestamp + "\n" + this.name;
+        return this.day + "" + this.month + " " + this.year + " " + this.timestamp + "\n" + this.name;
     }
 
     /**
