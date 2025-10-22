@@ -84,12 +84,14 @@ public class TimeSlot implements Comparable<TimeSlot> {
      * @return
      */
     public int getMonth(){return this.month;}
+    public int getYear(){return this.year;}
 
     /**
      * getTimestamp
      * @return
      */
     public int getTimestamp(){return this.timestamp;}
+    public boolean getIfPaid(){return this.paid;}
 
     /**
      * getName

@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import FileHandler.ReadAppointments;
 
 public class AppointmentHandler {
-    public ArrayList<TimeSlot> currentMonth;
-    public ArrayList<TimeSlot> nextMonth;
+    public ArrayList<TimeSlot> currentMonth = new ArrayList<>();
+    public ArrayList<TimeSlot> nextMonth = new ArrayList<>();
     private String currentMonthFilename;
     private String nextMonthFilename;
 
@@ -25,15 +25,33 @@ public class AppointmentHandler {
         //Initialisere arrays
         //    ArrayList<TimeSlot> currentMonth;
         //    ArrayList<TimeSlot> nextMonth;
-        this.currentMonth = new ArrayList<>();
-        this.nextMonth = new ArrayList<>();
 
         //Reader objekt
-        ReadAppointments reader = new ReadAppointments();
+        ReadAppointments currentReader = new ReadAppointments(this.currentMonthFilename);
         //Læser data fra csv appointments filer og gemmer i array
-        ArrayList<String[]> currentMonthData = reader.reader(this.currentMonthFilename);
-        ArrayList<String[]> nextMonthData = reader.reader(this.nextMonthFilename);
+        ArrayList<String[]> currentMonthString = currentReader.reader();
+        makeTimeSlots(currentMonthString, this.currentMonth);
+        ReadAppointments nextReader = new ReadAppointments(this.nextMonthFilename);
 
+        ArrayList<String[]> nextMonthString = nextReader.reader();
+        makeTimeSlots(nextMonthString, this.nextMonth);
+
+
+
+    }
+
+
+    private void makeTimeSlots(ArrayList<String[]> input, ArrayList<TimeSlot> Month) {
+        for (String[] strings : input) {
+            int day = Integer.parseInt(strings[0]);
+            int month = Integer.parseInt(strings[1]);
+            int year = Integer.parseInt(strings[2]);
+            int timestamp = Integer.parseInt(strings[3]);
+            String name = strings[4];
+            boolean paid = Boolean.getBoolean(strings[5]);
+            TimeSlot time = new TimeSlot(day, month, year, timestamp, name, paid);
+            Month.add(time);
+        }
     }
 
     //getters
@@ -44,6 +62,7 @@ public class AppointmentHandler {
     public String getNextMonthFilename() {
         return nextMonthFilename;
     }
+    public ArrayList<TimeSlot> getCurrentMonth(){return this.currentMonth;}
 
     public String getNextMonth(String currentMonth){
         String monthValue = currentMonth.substring(0, 2);
