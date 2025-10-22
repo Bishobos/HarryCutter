@@ -22,8 +22,8 @@ public class AppointmentHandler {
     }
 
     public String getNextMonth(String currentMonth){
-        String monthValue = currentMonth.substring(2, 4);
-        String yearValue = currentMonth.substring(4, 8);
+        String monthValue = currentMonth.substring(0, 2);
+        String yearValue = currentMonth.substring(2, 6);
 
         int monthInt = Integer.parseInt(monthValue);
         int yearInt = Integer.parseInt(yearValue);
@@ -40,9 +40,7 @@ public class AppointmentHandler {
             nextYear = (yearInt + 1);
         }
         else {
-            System.out.println("Error: 404");
-            nextMonth = 1;
-            nextYear = 1900;
+            throw new IllegalArgumentException("Num not within range.");
         }
 
         String _nextMonth;
