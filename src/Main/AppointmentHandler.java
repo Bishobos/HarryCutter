@@ -1,18 +1,42 @@
 package Main;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
+import FileHandler.ReadAppointments;
 
 public class AppointmentHandler {
-    ArrayList<TimeSlot> currentMonth;
-    ArrayList<TimeSlot> nextMonth;
+    public ArrayList<TimeSlot> currentMonth;
+    public ArrayList<TimeSlot> nextMonth;
     private String currentMonthFilename;
     private String nextMonthFilename;
 
     public AppointmentHandler(){
         //use ReadAppointments to fill currentMonth and nextMonth
         //case where no file at that date exists should be handled, no timeslots to be added to array may cause errors initially
+        //Henter nuværende dato for måned og år
+        LocalDate now = LocalDate.now();
+        int month = now.getMonthValue();
+        int year = now.getYear();
+
+        //Sætter filnavn for værende måned//år
+        this.currentMonthFilename = String.format("%02d%d", month, year);
+        this.nextMonthFilename = getNextMonth(currentMonthFilename);
+
+        //Initialisere arrays
+        //    ArrayList<TimeSlot> currentMonth;
+        //    ArrayList<TimeSlot> nextMonth;
+        this.currentMonth = new ArrayList<>();
+        this.nextMonth = new ArrayList<>();
+
+        //Reader objekt
+        ReadAppointments reader = new ReadAppointments();
+        //Læser data fra csv appointments filer og gemmer i array
+        ArrayList<String[]> currentMonthData = reader.reader(this.currentMonthFilename);
+        ArrayList<String[]> nextMonthData = reader.reader(this.nextMonthFilename);
+
     }
 
+    //getters
     public String getCurrentMonthFilename() {
         return currentMonthFilename;
     }
