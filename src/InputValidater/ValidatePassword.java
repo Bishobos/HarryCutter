@@ -10,6 +10,7 @@ public class ValidatePassword {
      * I en videreudvikling / rigtigt scenarie vil vi gerne kunne ændre det. /JS
      * For dette programs formål, er det altid admin123 og kan ikke ændres. /JS
      */
+
     public boolean validatePassword(){
 
         String input = "";
