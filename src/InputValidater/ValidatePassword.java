@@ -15,6 +15,7 @@ public class ValidatePassword {
 
         String input = "";
         Scanner sc = new Scanner(System.in);
+
         /**
          * Vi åbner scanner før vores while loop. Så behøver vi ikke åbne den igen senere. /JS
          */
@@ -28,6 +29,7 @@ public class ValidatePassword {
                 sc.close();
                 System.out.println("Password godkendt!");
                 return true;
+
                 /**
                  * Hvis input = password, lukker scanneren sammen med while loopet. /JS
                  * Vi lukker scanneren for ordens skyld. /JS
