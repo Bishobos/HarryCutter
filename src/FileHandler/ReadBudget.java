@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.rmi.AccessException;
 import java.util.ArrayList;
 
 public class ReadBudget implements CSVReader{
@@ -12,14 +11,10 @@ public class ReadBudget implements CSVReader{
     ArrayList<String[]> formatedData = new ArrayList<>();
     String filename = "src/FileHandler/Files/Appointments/budget.csv";
 
-    public ReadBudget(boolean isPasswordValidated){
+    public ReadBudget(boolean isPasswordValidated) throws IllegalAccessException {
         if (!isPasswordValidated) {
-            try {
-                throw new IllegalAccessException("Password required!");
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
+            throw new IllegalAccessException("Password required!");
             }
-        }
     }
 
     @Override
