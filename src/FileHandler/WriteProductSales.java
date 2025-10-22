@@ -1,5 +1,7 @@
 package FileHandler;
 
+import Main.TimeSlot;
+
 public class WriteProductSales implements CSVWriter{
 
     @Override
@@ -8,7 +10,7 @@ public class WriteProductSales implements CSVWriter{
     }
 
     @Override
-    public String format(){
+    public String format(TimeSlot toFormat){
         return "formatted export String";
     }
 

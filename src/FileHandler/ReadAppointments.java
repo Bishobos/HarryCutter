@@ -36,9 +36,7 @@ public class ReadAppointments implements CSVReader{
      */
     @Override
     public ArrayList<String[]> reader(){
-        String formatedFilename = setFilename(this.filename);
-        System.out.println(formatedFilename);
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(formatedFilename))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
             String line;
             while((line = bufferedReader.readLine()) != null){
                 formatedData.add(format(line));

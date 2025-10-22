@@ -22,6 +22,7 @@ public class AppointmentHandlerTest {
         System.out.println("CurrentMonth størrelse: " + ah.currentMonth.size());
         assert ah.nextMonth != null;
         System.out.println("NextMonth størrelse: " + ah.nextMonth.size());
+        System.out.println(ah.currentMonth.getFirst());
 
     }
 }
