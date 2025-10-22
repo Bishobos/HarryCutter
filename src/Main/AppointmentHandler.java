@@ -22,9 +22,8 @@ public class AppointmentHandler {
     }
 
     public String getNextMonth(String currentMonth){
-        String input = currentMonth;
-        String monthValue = input.substring(2, 4);
-        String yearValue = input.substring(4, 8);
+        String monthValue = currentMonth.substring(2, 4);
+        String yearValue = currentMonth.substring(4, 8);
 
         int monthInt = Integer.parseInt(monthValue);
         int yearInt = Integer.parseInt(yearValue);
@@ -46,12 +45,13 @@ public class AppointmentHandler {
             nextYear = 1900;
         }
 
+        String _nextMonth;
         if (nextMonth < 10) {
-            nextMonth = Integer.parseInt("0" + nextMonth);
+            _nextMonth = "0" + Integer.toString(nextMonth);
         } else {
-            System.out.println("Error: 404");
+            _nextMonth = Integer.toString(nextMonth);
         }
-        return String.valueOf(nextMonth + nextYear);
+        return _nextMonth + Integer.toString(nextYear);
 
     }
 
