@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WriteProductSales implements CSVWriter{
     String filename = "src/FileHandler/Files/Appointments/productsales.csv";
-    ArrayList<String[]> productSales = new ArrayList<>();
+    ArrayList<String[]> productSales;
     ReadProductSales reader = new ReadProductSales();
 
     public WriteProductSales(){this.productSales = reader.reader();}
