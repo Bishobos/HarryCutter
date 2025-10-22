@@ -30,18 +30,18 @@ public class AppointmentHandler {
         ReadAppointments currentReader = new ReadAppointments(this.currentMonthFilename);
         //Læser data fra csv appointments filer og gemmer i array
         ArrayList<String[]> currentMonthString = currentReader.reader();
-        makeTimeSlot(currentMonthString, this.currentMonth);
+        makeTimeSlots(currentMonthString, this.currentMonth);
         ReadAppointments nextReader = new ReadAppointments(this.nextMonthFilename);
 
         ArrayList<String[]> nextMonthString = nextReader.reader();
-        makeTimeSlot(nextMonthString, this.nextMonth);
+        makeTimeSlots(nextMonthString, this.nextMonth);
 
 
 
     }
 
 
-    private void makeTimeSlot(ArrayList<String[]> input, ArrayList<TimeSlot> Month) {
+    private void makeTimeSlots(ArrayList<String[]> input, ArrayList<TimeSlot> Month) {
         for (String[] strings : input) {
             int day = Integer.parseInt(strings[0]);
             int month = Integer.parseInt(strings[1]);
