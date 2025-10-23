@@ -82,7 +82,7 @@ public class AppointmentHandler {
             nextYear = (yearInt + 1);
         }
         else {
-            throw new IllegalArgumentException("Num not within range.");
+            throw new IllegalArgumentException("Nummer ikke mellem 1-12.");
         }
 
         String _nextMonth;
