@@ -3,10 +3,19 @@ package InputValidater;
 import java.util.Scanner;
 
 public class ValidateTimestamp {
+    private int day;
+    private int month;
+    private int year;
+    private int timestamp;
+    public int getDay(){return this.day;}
+    public int getMonth(){return this.month;}
+    public int getYear(){return this.year;}
+    public int getTimestamp(){return this.timestamp;}
 
     public boolean validateTimestamp() {
         String input = "";
         Scanner sc = new Scanner(System.in);
+
         while (true) {
             System.out.println("Indtast en gyldig dato og klokkeslæt. (dd mm yyyy ttmm)");
             String timestampInput = sc.nextLine();
@@ -58,7 +67,10 @@ public class ValidateTimestamp {
                 System.out.println("Ugyldigt klokkeslæt.");
                 return false;
             }
-
+            this.day = day;
+            this.month = month;
+            this.year = year;
+            this.timestamp = Integer.parseInt(hourString + minuteString);
             return true;
         }
 
