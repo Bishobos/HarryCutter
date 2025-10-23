@@ -1,8 +1,6 @@
 package Main;
 
-import FileHandler.ReadAppointments;
-import FileHandler.ReadBudget;
-import FileHandler.ReadProductSales;
+import FileHandler.*;
 import InputValidater.ValidatePassword;
 import InputValidater.ValidateTimestamp;
 
@@ -16,11 +14,12 @@ public class Menu {
     private boolean running;
 
     //menu konstruktør starter scanner
+
     public Menu() {
         this.scanner = new Scanner(System.in);
 //laver date input string
         LocalDate now = LocalDate.now();
-        String dateInput = String.format("%02d%02d€d", now.getDayOfMonth(), now.getMonthValue(), now.getYear());
+        String dateInput = String.format("%02d%02d%d", now.getDayOfMonth(), now.getMonthValue(), now.getYear());
 
         this.appointmentHandler = new AppointmentHandler(dateInput);
         this.running = true;
@@ -33,6 +32,10 @@ public class Menu {
             int choice = getUserChoice();
             menuChoise(choice);
         }
+
+        WriteAppointments writer = new WriteAppointments(appointmentHandler);
+        writer.writer();
+
         scanner.close();
         System.out.println("Afslutter programmet.");
     }
@@ -44,7 +47,7 @@ public class Menu {
         System.out.println("3. Afslut booking(registrer betaling)");
         System.out.println("4. Vis Bookinger.");
         System.out.println("5. Vis Produkter ");
-        System.out.println("6. vis Budget (kræver pass");
+        System.out.println("6. vis Budget (kræver password)");
         System.out.println("0. Afslut program");
         System.out.println("Vælg funktion");
     }
@@ -85,10 +88,18 @@ public class Menu {
 
         System.out.println("\n Book ny tid");
 
+
         ValidateTimestamp validator = new ValidateTimestamp();
         if (!validator.validateTimestamp()) {
             System.out.println("ugyldig tid. Booking afbrudt");
+            return;
         }
+
+        int day = validator.getDay();
+        int month = validator.getMonth();
+        int year = validator.getYear();
+        int timestamp = validator.getTimestamp();
+
         System.out.print("Indtast kundens navn: ");
         String name = this.scanner.nextLine();
 
@@ -96,7 +107,13 @@ public class Menu {
             System.out.println("Navn må ikke være tomt. Booking afbrudt.");
             return;
         }
-        System.out.println("Booking oprettet for " + name);
+
+        try{
+            appointmentHandler.makeTimeslot(day, month, year, timestamp, name, false);
+            System.out.println("Booking oprettet for " + name);
+        }catch(IllegalArgumentException e) {
+            System.out.println("fejl: " + e.getMessage());
+        }
     }
 
 
@@ -107,11 +124,24 @@ public class Menu {
 
         displayBookings();
 
-        System.out.print("Indtast dato og tid for booking der skal annulleres (dd mm yyyy ttmm): ");
-        String input = this.scanner.nextLine();
+        ValidateTimestamp validator = new ValidateTimestamp();
+        if(!validator.validateTimestamp()){
+            System.out.println("ugyldig tid.");
+            return;
+        }
 
-        System.out.println("Booking annuleret");
+        int day = validator.getDay();
+        int month = validator.getMonth();
+        int year = validator.getYear();
+        int timestamp = validator.getTimestamp();
 
+
+        try{
+            appointmentHandler.deleteTimeSlot(day, month, year, timestamp);
+            System.out.println("Booking annuleret");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Fejl: " + e.getMessage());
+        }
     }
 
     public void closeBooking() {
@@ -120,21 +150,79 @@ public class Menu {
         displayBookings();
 
         System.out.print("Indtast dato og tid for booking der skal afsluttes (dd mm yyyy ttmm): ");
-        String input = this.scanner.nextLine();
+        ValidateTimestamp validator = new ValidateTimestamp();
+        if (!validator.validateTimestamp()) {
+            System.out.println("ugyldig tid.");
+            return;
 
-        System.out.println("Ekstra produkter:");
-        displayProducts();
-
-        System.out.print("Er der købt ekstra produkter? (ja/nej): ");
-        String hasProducts = this.scanner.nextLine().toLowerCase();
-
-        if (hasProducts.equals("ja")) {
-            handleProductSales();
         }
-        //  booking bliver betalt og data gemt
-        System.out.println("Booking afsluttet og betaling registreret.");
 
+        int day = validator.getDay();
+        int month = validator.getMonth();
+        int year = validator.getYear();
+        int timestamp = validator.getTimestamp();
+
+        try {
+            TimeSlot booking = new TimeSlot(day, month, year, timestamp, "temp", false);
+
+            System.out.println("Ekstra produkter:");
+            displayProducts();
+
+            System.out.print("Er der købt ekstra produkter? (ja/nej): ");
+            String hasProducts = this.scanner.nextLine().toLowerCase();
+
+            double totalAmount = 0.0;
+
+            if (hasProducts.equals("ja")) {
+                totalAmount = handleProductSales();
+            }
+
+            WriteBudget budgetWriter = new WriteBudget(booking, totalAmount);
+            budgetWriter.writer();
+
+            System.out.println("booking afsluttet og betaling registreret");
+
+        } catch (IllegalStateException e) {
+            System.out.println("fejl: " + e.getMessage());
+        }
     }
+
+    private double handleProductSales() {
+        boolean addingProducts = true;
+        double total = 0.0;
+        WriteProductSales salesWriter = new WriteProductSales();
+
+        while(addingProducts){
+            System.out.println("Indtast produkt navn (eller 'færdig' for at stoppe): )");
+            String productName = this.scanner.nextLine();
+
+            if(productName.equalsIgnoreCase("færdig")) {
+                addingProducts = false;
+            }else{
+
+                Products foundProduct = null;
+                for (Products p : Products.values()) {
+                    if (p.getLabel().equalsIgnoreCase(productName)){
+                        foundProduct = p;
+                        break;
+                    }
+                }
+                if (foundProduct != null){
+                    salesWriter.sale(foundProduct.getLabel());
+                    total += foundProduct.getPrice();
+                    System.out.println("Produkt tilføjet: " + productName + " (" + foundProduct.getPrice() + " kr)");
+                }else{
+                    System.out.println("ukendt produkt");
+                }
+            }
+        }
+
+        salesWriter.writer();
+
+        return total;
+    }
+
+
 
     //printer liste med alle produkter og pris
     private void displayProducts() {
@@ -145,8 +233,10 @@ public class Menu {
         }
     }
 
-    private void handleProductSales() {
+    private double registerProductSales() {
         boolean addingProducts = true;
+        double total = 0.0;
+        WriteProductSales salesWriter = new WriteProductSales();
 
         while (addingProducts) {
             System.out.print("Indtast produkt navn (eller 'færdig' for at stoppe): ");
@@ -155,9 +245,28 @@ public class Menu {
             if (productName.equalsIgnoreCase("færdig")) {
                 addingProducts = false;
             } else {
-                System.out.println("Produkt tilføjet: " + productName);
+
+                Products foundProduct = null;
+                for(Products p : Products.values()){
+                    if (p.getLabel().equalsIgnoreCase(productName)){
+                        foundProduct = p;
+                        break;
+                    }
+                }
+
+                if (foundProduct != null) {
+                    salesWriter.sale(foundProduct.getLabel());
+                    total += foundProduct.getPrice();
+                    System.out.println("Produkt tilføjet: " + productName + " (" + foundProduct.getPrice() + " kr)");
+                }else{
+                    System.out.println("kunne ikke finde produktet");
+                }
             }
         }
+        //gemmer salget
+            salesWriter.writer();
+
+        return total;
     }
 
     //needs password validation, then to use ReadBudget to display the budget
@@ -173,7 +282,7 @@ public class Menu {
 
         try {
             ReadBudget budgetReader = new ReadBudget(true);
-            ArrayList<String[]> budgetData = new budgetReader.reader();
+            ArrayList<String[]> budgetData = budgetReader.reader();
 
             if (budgetData.isEmpty()) {
                 System.out.println("Ingen Data.");

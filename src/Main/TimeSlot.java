@@ -111,7 +111,7 @@ public class TimeSlot implements Comparable<TimeSlot> {
      */
     @Override
     public String toString(){
-        return this.day + "" + this.month + " " + this.year + " " + this.timestamp + "\n" + this.name;
+        return this.day + " " + this.month + " " + this.year + " " + this.timestamp + "\n" + this.name;
     }
 
     /**
