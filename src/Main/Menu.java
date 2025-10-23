@@ -1,8 +1,12 @@
 package Main;
 
 import FileHandler.ReadAppointments;
+import FileHandler.ReadBudget;
+import FileHandler.ReadProductSales;
 import InputValidater.ValidatePassword;
 import InputValidater.ValidateTimestamp;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -154,14 +158,58 @@ public class Menu {
     //needs password validation, then to use ReadBudget to display the budget
     //password validation call is currently in ReadBudget class for added obfuscation
     public void viewBudget() {
+        System.out.println("Vis budget");
 
-    }
+        ValidatePassword validator = new ValidatePassword();
+        if (!validator.validatePassword()) {
+            System.out.println("\n Forkert kode, ingen adgang!");
+            return;
+        }
 
-    public void viewProductSales() {
-        //needs to read the ProductSales file, and display the read data
-    }
+        try {
+            ReadBudget budgetReader = new ReadBudget(true);
+            ArrayList<String[]> budgetData = new budgetReader.reader();
 
-    public void displayBookings() {
-        //Displays all bookings for a given month and the following month
+            if (budgetData.isEmpty()) {
+                System.out.println("Ingen Data.");
+                return;
+            }
+
+
+            //needs to read the ProductSales file, and display the read data
+
+            public void viewProductSales () {
+                System.out.println("\n Statistik for produktsalg");
+
+                ReadProductSales salesReader = new ReadProductSales();
+                ArrayList<String[]> salesData = salesReader.reader();
+
+                if (salesData.isEmpty()) {
+                    System.out.println("ingen data fundet.");
+                    return;
+
+            }
+        }
+            //Displays all bookings for a given month and the following month
+
+            public void displayBookings() {
+                System.out.println("\n Denne måneds bookings");
+                if (appointmentHandler.getCurrentMonth().isEmpty()){
+                    System.out.println("Ingen bookinger");
+                }else{
+                    for (TimeSlot booking : appointmentHandler.getCurrentMonth()){
+                        System.out.println(booking);
+                    }
+                }
+
+                System.out.println("\n Næste måneds bookings");
+                if (appointmentHandler.getNextMonth().isEmpty()){
+                    System.out.println("Ingen bookinger");
+                }else{
+                    for (TimeSlot booking : appointmentHandler.getNextMonth()){
+                        System.out.println(booking);
+                    }
+                }
+            }
     }
 }
