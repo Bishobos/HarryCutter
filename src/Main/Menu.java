@@ -6,6 +6,7 @@ import FileHandler.ReadProductSales;
 import InputValidater.ValidatePassword;
 import InputValidater.ValidateTimestamp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,7 +18,11 @@ public class Menu {
     //menu konstruktør starter scanner
     public Menu() {
         this.scanner = new Scanner(System.in);
-        this.appointmentHandler = new AppointmentHandler();
+//laver date input string
+        LocalDate now = LocalDate.now();
+        String dateInput = String.format("%02d%02d€d", now.getDayOfMonth(), now.getMonthValue(), now.getYear());
+
+        this.appointmentHandler = new AppointmentHandler(dateInput);
         this.running = true;
     }
 
