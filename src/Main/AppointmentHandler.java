@@ -9,6 +9,11 @@ public class AppointmentHandler {
     private String currentMonthFilename;
     private String nextMonthFilename;
 
+    public AppointmentHandler() {
+        String test = "test";
+        System.out.println(test);
+    }
+
     public AppointmentHandler(String dateInput){
         //use ReadAppointments to fill currentMonth and nextMonth
         //case where no file at that date exists should be handled, no timeslots to be added to array may cause errors initially
