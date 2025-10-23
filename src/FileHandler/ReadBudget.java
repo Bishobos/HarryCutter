@@ -11,6 +11,12 @@ public class ReadBudget implements CSVReader{
     ArrayList<String[]> formatedData = new ArrayList<>();
     String filename = "src/FileHandler/Files/Appointments/budget.csv";
 
+    public ReadBudget(boolean isPasswordValidated) throws IllegalAccessException {
+        if (!isPasswordValidated) {
+            throw new IllegalAccessException("Password required!");
+            }
+    }
+
     @Override
     public ArrayList<String[]> reader(){
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filename))){
@@ -39,9 +45,5 @@ public class ReadBudget implements CSVReader{
     }
 
     //may need parameters both here and in interface
-
-    public boolean inputPassword(){
-        return false;
-    }
 
 }
