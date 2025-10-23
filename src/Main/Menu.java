@@ -295,6 +295,7 @@ public class Menu {
 
 
             //needs to read the ProductSales file, and display the read data
+    //udskriver listen af produkter og hvor mange der er solgt og vender retur til menu
 
     public void viewProductSales () {
         System.out.println("\n Statistik for produktsalg");
@@ -306,6 +307,9 @@ public class Menu {
             System.out.println("ingen data fundet.");
             return;
 
+        }
+        for (String[] product : salesData) {
+            System.out.println(product[0] + ": " + product[1]);
         }
     }
     //Displays all bookings for a given month and the following month
