@@ -174,42 +174,45 @@ public class Menu {
                 System.out.println("Ingen Data.");
                 return;
             }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
             //needs to read the ProductSales file, and display the read data
 
-            public void viewProductSales () {
-                System.out.println("\n Statistik for produktsalg");
+    public void viewProductSales () {
+        System.out.println("\n Statistik for produktsalg");
 
-                ReadProductSales salesReader = new ReadProductSales();
-                ArrayList<String[]> salesData = salesReader.reader();
+        ReadProductSales salesReader = new ReadProductSales();
+        ArrayList<String[]> salesData = salesReader.reader();
 
-                if (salesData.isEmpty()) {
-                    System.out.println("ingen data fundet.");
-                    return;
+        if (salesData.isEmpty()) {
+            System.out.println("ingen data fundet.");
+            return;
 
+        }
+    }
+    //Displays all bookings for a given month and the following month
+
+    public void displayBookings () {
+        System.out.println("\n Denne måneds bookings");
+        if (appointmentHandler.getCurrentMonth().isEmpty()) {
+            System.out.println("Ingen bookinger");
+        } else {
+            for (TimeSlot booking : appointmentHandler.getCurrentMonth()) {
+                System.out.println(booking);
             }
         }
-            //Displays all bookings for a given month and the following month
 
-            public void displayBookings() {
-                System.out.println("\n Denne måneds bookings");
-                if (appointmentHandler.getCurrentMonth().isEmpty()){
-                    System.out.println("Ingen bookinger");
-                }else{
-                    for (TimeSlot booking : appointmentHandler.getCurrentMonth()){
-                        System.out.println(booking);
-                    }
-                }
-
-                System.out.println("\n Næste måneds bookings");
-                if (appointmentHandler.getNextMonth().isEmpty()){
-                    System.out.println("Ingen bookinger");
-                }else{
-                    for (TimeSlot booking : appointmentHandler.getNextMonth()){
-                        System.out.println(booking);
-                    }
-                }
+        System.out.println("\n Næste måneds bookings");
+        if (appointmentHandler.getNextMonth().isEmpty()) {
+            System.out.println("Ingen bookinger");
+        } else {
+            for (TimeSlot booking : appointmentHandler.getNextMonth()) {
+                System.out.println(booking);
             }
+        }
     }
 }
