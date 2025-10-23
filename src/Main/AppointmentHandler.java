@@ -10,7 +10,7 @@ public class AppointmentHandler {
     private String nextMonthFilename;
 
     public AppointmentHandler() {
-        String test = "test";
+        String test = "01012000";
         System.out.println(test);
     }
 
