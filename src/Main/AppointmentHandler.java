@@ -115,8 +115,42 @@ public class AppointmentHandler {
         }
     }
 
-    public void deleteTimeSlot(){
+    public void deleteTimeSlot(int day, int month, int year, int timestamp) {
+        String specificMonth = String.format("%02d%d", month, year);
 
+        if (specificMonth.equals(currentMonthFilename)) {
+            //fjern fra nuværende måneds array
+            for (int i = 0; i < currentMonth.size(); i++) {
+                TimeSlot slot = currentMonth.get(i);
+                if
+                    //hvis alle attributes er det samme så det den korrekte og bliver slettet.
+                (slot.getDay() == day &&
+                        slot.getMonth() == month &&
+                        slot.getYear() == year &&
+                        slot.getTimestamp() == timestamp) {
+                    currentMonth.remove(i);
+                    //har fjernet fra array
+                    return;
+                }
+            }
+        } else if (specificMonth.equals(nextMonthFilename)) {
+            //fjern fra næste måneds array
+            for (int i = 0; i < nextMonth.size(); i++) {
+                TimeSlot slot = nextMonth.get(i);
+                if
+                    //hvis alle attributes er det samme så det den korrekte og bliver slettet.
+                (slot.getDay() == day &&
+                        slot.getMonth() == month &&
+                        slot.getYear() == year &&
+                        slot.getTimestamp() == timestamp) {
+                    nextMonth.remove(i);
+                    //har fjernet fra array behøver ik return noget andet. i think
+                    return;
+                } else {
+                    throw new IllegalArgumentException("Dato ikke i nuværende eller næste måned");
+                }
+            }
+        }
     }
 
     private void sortByTime(ArrayList<TimeSlot> list){
