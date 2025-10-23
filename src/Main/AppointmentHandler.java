@@ -9,11 +9,6 @@ public class AppointmentHandler {
     private String currentMonthFilename;
     private String nextMonthFilename;
 
-    public AppointmentHandler() {
-        String test = "01012000";
-        System.out.println(test);
-    }
-
     public AppointmentHandler(String dateInput){
         //use ReadAppointments to fill currentMonth and nextMonth
         //case where no file at that date exists should be handled, no timeslots to be added to array may cause errors initially
@@ -45,7 +40,7 @@ public class AppointmentHandler {
             int year = Integer.parseInt(strings[2]);
             int timestamp = Integer.parseInt(strings[3]);
             String name = strings[4];
-            boolean paid = Boolean.getBoolean(strings[5]);
+            boolean paid = Boolean.parseBoolean(strings[5]);
             TimeSlot time = new TimeSlot(day, month, year, timestamp, name, paid);
             Month.add(time);
         }
@@ -61,6 +56,9 @@ public class AppointmentHandler {
     }
     public ArrayList<TimeSlot> getCurrentMonth(){
         return this.currentMonth;
+    }
+    public ArrayList<TimeSlot> getNextMonth() {
+        return this.nextMonth;
     }
 
     public String getNextMonth(String currentMonth){
