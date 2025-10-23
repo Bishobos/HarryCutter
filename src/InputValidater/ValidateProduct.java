@@ -1,25 +1,36 @@
 package InputValidater;
 
+import Main.Products;
+
+import java.util.Scanner;
+
 public class ValidateProduct {
 
-    public boolean validateProduct(){
+    public Products productValidated() {
         String input = "";
-        //get user input, check with product enum if the product is valid, if not ask again
-        while(true){
-            if(validateToEnum(input)){
-                return true;
+
+        Scanner productScanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Indtast produkt navn (Shampoo, Conditioner, Wax, Men's haircut, Women's haircut, curls):");
+            String productInput = productScanner.nextLine().trim(); // vi trimmer for at tage højde for trykfejl
+
+            Products product = validateToEnum(productInput);
+            if (product == null) {
+                System.out.println("Produkt er godkendt:  " + product.getLabel());
+                return product;
+            } else {
+                System.out.println("Ugyldigt produktnavn. Prøv igen");
             }
-            else{
-                //get new input
-            }
+
         }
     }
 
-    private boolean validateToEnum(String test){
-        //check if TimeStamp exists with Months enum
-        return true;
+    private Products validateToEnum(String input) {
+        for (Products p : Products.values()) {
+            if (p.getLabel().equalsIgnoreCase(input)) {
+                return p;
+            }
+        }
+        return null; // not found
     }
-
-    //validateToEnum should maybe be independent module to reduce redundancy
-    //validate user input interface may also be smart to make
 }
