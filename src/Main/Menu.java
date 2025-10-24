@@ -13,8 +13,8 @@ public class Menu {
     private AppointmentHandler appointmentHandler;
     private boolean running;
 
-    //menu konstruktør starter scanner
-
+    /**menu konstruktør starter scanner
+*/
     public Menu() {
         this.scanner = new Scanner(System.in);
 //laver date input string
@@ -25,7 +25,10 @@ public class Menu {
         this.running = true;
     }
 
-    //while loop that asks what function to use or ends loop and closes program
+    /**
+     * mainloop i menu der viser menuvalgene og kalder på de relevante metoder med switch statements
+     *
+     */
     public void mainLoop() {
         while (running) {
             displayMenu();
@@ -52,7 +55,10 @@ public class Menu {
         System.out.println("Vælg funktion");
     }
 
-    //Læser brugerinput og validere om det er et tal der er tastet ind
+    /**
+     *     Læser brugerinput og validere om det er et tal der er tastet ind returnere -1 ved forkert indtastning da det ikke er et valg
+     *     i menu så den looper forfra uden at ændre noget.
+     */
     private int getUserChoice() {
         try {
             int choice = Integer.parseInt(scanner.nextLine());
@@ -82,7 +88,9 @@ public class Menu {
     }
 //this should be several different functions for bookings of different lengths
     //gets user inputs, validates them, and uses Main.Schedule.makeTimeSlot with those inputs
-//bruges til at booke nye tider og validere tidspunkt med ValidateTimestamp
+    /**
+     *     bruges til at booke nye tider og validere tidspunkt med ValidateTimestamp
+     */
 
     public void bookTimeslot() {
 
@@ -117,8 +125,9 @@ public class Menu {
     }
 
 
-    //Delete a Main.TimeSlot without payment and closing it out
-    //bruges til at annulere en eksisterende booking uden betaling
+    /**
+     *     bruges til at annulere en eksisterende booking uden betaling
+     */
     public void cancelBooking() {
         System.out.println("\n Annuller booking.");
 
@@ -266,7 +275,6 @@ opretter variabel og søger gennem nuværende/næste måned og hvis den ikke fin
         System.out.println("Tilgængelige produkter:");
         for (Products product : Products.values()) {
             System.out.println("- " + product.getLabel() + ": " + product.getPrice() + " kr");
-            //should ask for what products extra products have been bought, then register the payment in budget, set the "paid" boolean to true, and increment productSales
         }
     }
 
@@ -306,8 +314,7 @@ opretter variabel og søger gennem nuværende/næste måned og hvis den ikke fin
         return total;
     }
 
-    //needs password validation, then to use ReadBudget to display the budget
-    //password validation call is currently in ReadBudget class for added obfuscation
+
     //tjekker om koden er tastet korrekt ved at kalde ValidatePassword klassen.
     public void viewBudget() {
         System.out.println("Vis budget");
@@ -332,7 +339,6 @@ opretter variabel og søger gennem nuværende/næste måned og hvis den ikke fin
     }
 
 
-            //needs to read the ProductSales file, and display the read data
             //udskriver listen af produkter og hvor mange der er solgt og vender retur til menu
 
     public void viewProductSales () {
@@ -350,7 +356,7 @@ opretter variabel og søger gennem nuværende/næste måned og hvis den ikke fin
             System.out.println(product[0] + ": " + product[1]);
         }
     }
-    //Displays all bookings for a given month and the following month
+
     //viser bookings for buværende og næste måned ved at kalde det fra appointmenthandler og ellers printe ingen booking hvis  bookingerne er tomme.
     public void displayBookings () {
         System.out.println("\n Denne måneds bookings");
