@@ -3,7 +3,7 @@ package InputValidater;
 import java.util.Scanner;
 
 public class ValidatePassword {
-    private static final String password = "admin123";
+    private static final String password = "hairyharry";
 
     /**
      * Vi ved at password er admin123 ifølge vores klient.
