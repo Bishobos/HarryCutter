@@ -6,17 +6,33 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * ReadBudget er en funktion der læser budgetet fra budget.csv
+ * Has Methods: <br>
+ * {@link #ReadBudget(boolean)}
+ * {@link #reader()}
+ * {@link #format(String)}
+ */
 public class ReadBudget implements CSVReader{
 
     ArrayList<String[]> formatedData = new ArrayList<>();
     String filename = "src/FileHandler/Files/Appointments/budget.csv";
 
+    /**
+     * ReadBudget er en constructor
+     * @param isPasswordValidated hvor vidt passwordet er valideret
+     * @throws IllegalAccessException Thrower en error hvis passwordet ikke er
+     */
     public ReadBudget(boolean isPasswordValidated) throws IllegalAccessException {
         if (!isPasswordValidated) {
             throw new IllegalAccessException("Password required!");
             }
     }
 
+    /**
+     * reader er hovedfunktionen der der læser budgetet
+     * @return ArrayList&ltString[]&gt indeholdene alt data i budgetet
+     */
     @Override
     public ArrayList<String[]> reader(){
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(this.filename))){

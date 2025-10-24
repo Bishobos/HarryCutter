@@ -8,19 +8,36 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriteAppointments implements CSVWriter{
+/**
+ * WriteAppointments bruges til at lave og skrive til filer som indeholder listen af bookede tider
+ * Has methods: <br>
+ * {@link #WriteAppointments(AppointmentHandler)} <br>
+ * {@link #writer()} <br>
+ * {@link #format(TimeSlot)} <br>
+ * {@link #makeFile()}
+ */
+public class WriteAppointments implements CSVWriter {
     String filename;
     AppointmentHandler appointments;
 
-    public WriteAppointments(AppointmentHandler appointments){
+    /**
+     * Constructor
+     *
+     * @param appointments AppointmentHandler indholdene alle oppointments der skal gemmes
+     */
+    public WriteAppointments(AppointmentHandler appointments) {
         this.appointments = appointments;
-        this.filename = "src/FileHandler/Files/Appointments/" + appointments.getCurrentMonthFilename() + ".csv";}
+        this.filename = "src/FileHandler/Files/Appointments/" + appointments.getCurrentMonthFilename() + ".csv";
+    }
 
+    /**
+     * writer er hovedfunktionen der skriver til .csv
+     */
     @Override
-    public void writer(){
+    public void writer() {
         makeFile();
-        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename))){
-            for (TimeSlot current: appointments.getCurrentMonth()){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename))) {
+            for (TimeSlot current : appointments.getCurrentMonth()) {
                 bufferedWriter.write(format(current));
                 bufferedWriter.newLine();
             }
@@ -29,8 +46,14 @@ public class WriteAppointments implements CSVWriter{
         }
     }
 
+    /**
+     * format formeterer dataen fra TimeSlot til der format der skal gemmes
+     *
+     * @param toFormat det TimeSlot der skal formatters
+     * @return formatteret TimeSlot som String
+     */
     @Override
-    public String format(TimeSlot toFormat){
+    public String format(TimeSlot toFormat) {
         String day = Integer.toString(toFormat.getDay());
         String month = Integer.toString(toFormat.getMonth());
         String year = Integer.toString(toFormat.getYear());
@@ -41,16 +64,20 @@ public class WriteAppointments implements CSVWriter{
         return day + ";" + month + ";" + year + ";" + timestamp + ";" + name + ";" + paid;
     }
 
-    private void makeFile(){
-        try{
+    /**
+     * forsøger på at lave en fil med navn {@link #filename}
+     */
+    private void makeFile() {
+        try {
             File file = new File(this.filename);
-            if (file.createNewFile()){
+            if (file.createNewFile()) {
                 System.out.println("New appointments file created");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("IOException");
-        //check if file with specified timestamp exists, if not make it
-    }}
+            //check if file with specified timestamp exists, if not make it
+        }
+    }
 
     //may need parameters both here and in interface, maybe of type schedule
 }

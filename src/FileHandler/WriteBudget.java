@@ -6,11 +6,21 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * WriteBudget er en append only funktion der skriver til budget når en booking aflsuttes
+ * Has Methods: <br>
+ * {@link #WriteBudget}
+ */
 public class WriteBudget implements CSVWriter {
     double amountPaid;
     String filename = "src/FileHandler/Files/Appointments/budget.csv";
     TimeSlot toWrite;
 
+    /**
+     * constructor
+     * @param toWrite TimSlottet der afsluttes
+     * @param amountPaid betalte total beløb
+     */
     public WriteBudget(TimeSlot toWrite, double amountPaid){
         if(toWrite.getIfPaid()) {
             throw new IllegalStateException("Booking already paid.");
@@ -19,6 +29,9 @@ public class WriteBudget implements CSVWriter {
         this.amountPaid = amountPaid;
     }
 
+    /**
+     * writer er hovedfunktionen der skriver til budget.csv
+     */
     @Override
     public void writer(){
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filename, true))){
@@ -30,6 +43,11 @@ public class WriteBudget implements CSVWriter {
 
     }
 
+    /**
+     * format formatter dataen til det format der skal skrives til filen
+     * @param toFormat det TimeSlot der ønskes formatteret
+     * @return String af formatteret data
+     */
     @Override
     public String format(TimeSlot toFormat){
         String day = Integer.toString(toFormat.getDay());

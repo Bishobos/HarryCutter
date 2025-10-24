@@ -144,9 +144,13 @@ public class Menu {
         }
     }
 
+    /**
+     * Lukker booking og spørger om der skal tilføjes ekstra produkter. Prisen registreres og gemmes til budgettet
+    */
+
     public void closeBooking() {
         System.out.println("\n Afslut booking");
-
+        //viser alle bookings
         displayBookings();
 
         System.out.print("Indtast dato og tid for booking der skal afsluttes (dd mm yyyy ttmm): ");
@@ -162,8 +166,41 @@ public class Menu {
         int year = validator.getYear();
         int timestamp = validator.getTimestamp();
 
+        /**
+opretter variabel og søger gennem nuværende/næste måned og hvis den ikke finder den så søger den videre, og hvis der ikke er noget der matcher printer
+         printer den 'ingen booking fundet'
+        */
+
+
         try {
-            TimeSlot booking = new TimeSlot(day, month, year, timestamp, "temp", false);
+            TimeSlot booking = null;
+
+            for(TimeSlot slot : appointmentHandler.getCurrentMonth()){
+                if(slot.getDay() == day && slot.getMonth() == month && slot.getYear() == year && slot.getTimestamp() == timestamp){
+                    booking = slot;
+                    break;
+                }
+            }
+
+            if (booking==null) {
+                for (TimeSlot slot : appointmentHandler.getNextMonth()) {
+                    if (slot.getDay() == day && slot.getMonth() == month &&
+                            slot.getYear() == year && slot.getTimestamp() == timestamp) {
+                        booking = slot;
+                        break;
+                    }
+                }
+            }
+
+            if (booking == null){
+                System.out.println("ingen booking fundet");
+                return;
+            }
+
+            /**
+             * Denne sprørg om der er tilkøbt ekstra produkter så prisen kan tilføjes. sætter startværdi til 0.0
+             *
+             */
 
             System.out.println("Ekstra produkter:");
             displayProducts();
@@ -271,6 +308,7 @@ public class Menu {
 
     //needs password validation, then to use ReadBudget to display the budget
     //password validation call is currently in ReadBudget class for added obfuscation
+    //tjekker om koden er tastet korrekt ved at kalde ValidatePassword klassen.
     public void viewBudget() {
         System.out.println("Vis budget");
 
@@ -295,7 +333,7 @@ public class Menu {
 
 
             //needs to read the ProductSales file, and display the read data
-    //udskriver listen af produkter og hvor mange der er solgt og vender retur til menu
+            //udskriver listen af produkter og hvor mange der er solgt og vender retur til menu
 
     public void viewProductSales () {
         System.out.println("\n Statistik for produktsalg");
@@ -313,7 +351,7 @@ public class Menu {
         }
     }
     //Displays all bookings for a given month and the following month
-
+    //viser bookings for buværende og næste måned ved at kalde det fra appointmenthandler og ellers printe ingen booking hvis  bookingerne er tomme.
     public void displayBookings () {
         System.out.println("\n Denne måneds bookings");
         if (appointmentHandler.getCurrentMonth().isEmpty()) {
