@@ -3,7 +3,7 @@ package InputValidater;
 import java.util.Scanner;
 
 public class ValidatePassword {
-    private final String password = "admin123";
+    private static final String password = "admin123";
 
     /**
      * Vi ved at password er admin123 ifølge vores klient.
@@ -11,7 +11,7 @@ public class ValidatePassword {
      * For dette programs formål, er det altid admin123 og kan ikke ændres.
      */
 
-    public boolean validatePassword(){
+    public static boolean validatePassword(){
 
         String input = "";
         Scanner sc = new Scanner(System.in);
